@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🕐 ¿Qué Hora Es?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ── ANIMATED BACKGROUND ── -->
+  <div class="bg-layer" id="bgLayer">
+    <div class="wave"></div>
+    <div class="wave wave2"></div>
+  </div>
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- ══════════════════════════════════════
+       WELCOME SCREEN
+       ══════════════════════════════════════ -->
+  <div class="screen active" id="welcome">
+    <span class="clock-mascot">🕐</span>
+    <div class="logo">¿Qué Hora Es?</div>
+    <p class="subtitle">¡Aprende las horas jugando! ⏰🌊</p>
+
+    <div class="welcome-card">
+
+      <!-- Name input -->
+      <label for="playerName">👦 ¿Cómo te llamas?</label>
+      <input type="text" id="playerName" placeholder="Escribe tu nombre..." autocomplete="off" />
+
+      <!-- Question count selector -->
+      <span class="q-selector-label">🔢 ¿Cuántas preguntas quieres?</span>
+      <div class="q-selector">
+        <button class="q-btn" data-count="5"  onclick="selectQCount(5)">5</button>
+        <button class="q-btn" data-count="10" onclick="selectQCount(10)">10</button>
+        <button class="q-btn" data-count="20" onclick="selectQCount(20)">20</button>
+      </div>
+
+      <button class="btn-start"  onclick="startGame()">🚀 ¡Empezar!</button>
+      <button class="btn-review" onclick="openModal()">📖 Repasar las horas</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       GAME SCREEN
+       ══════════════════════════════════════ -->
+  <div class="screen" id="game">
+
+    <!-- Header bar -->
+    <div class="game-header">
+      <span class="header-player" id="displayName">👤</span>
+      <span class="header-score">⭐ <span id="scoreDisplay">0</span> pts</span>
+      <span class="header-q"    id="questionCount">1 / 10</span>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Question card -->
+    <div class="question-card" id="questionCard">
+      <div class="question-type-badge" id="questionTypeBadge">En Punto</div>
+
+      <!-- Clock display (mode: clockToText) -->
+      <div class="clock-container" id="clockContainer">
+        <svg class="clock-svg" id="clockSVG" viewBox="0 0 200 200"></svg>
+      </div>
+
+      <!-- Text display (mode: textToClock) -->
+      <div class="time-text-display" id="timeTextDisplay" style="display:none;"></div>
+
+      <div class="question-label" id="questionLabel">¿Qué hora es?</div>
+
+      <!-- Options -->
+      <div class="options-grid" id="optionsGrid"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       RESULTS SCREEN
+       ══════════════════════════════════════ -->
+  <div class="screen" id="results">
+    <div class="results-card">
+      <span class="result-mascot" id="resultMascot">🏆</span>
+      <div class="result-name"    id="resultName">¡Jugador!</div>
+      <div class="score-big"      id="scoreBig">100</div>
+      <div class="score-label"    id="scoreLabel">puntos de 100</div>
+      <div class="stars-row"      id="starsRow">⭐⭐⭐⭐⭐</div>
+      <div class="result-message" id="resultMessage">¡Enhorabuena!</div>
+      <button class="btn-replay"  onclick="resetGame()">🔄 ¡Jugar otra vez!</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       FEEDBACK OVERLAY
+       ══════════════════════════════════════ -->
+  <div class="feedback-overlay" id="feedbackOverlay">
+    <div class="feedback-card">
+      <span class="feedback-emoji" id="feedbackEmoji">🎉</span>
+      <div class="feedback-title"        id="feedbackTitle">¡Correcto!</div>
+      <div class="feedback-explanation"  id="feedbackExplanation"></div>
+      <button class="btn-next" onclick="nextQuestion()">Siguiente ➡️</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       REVIEW MODAL
+       ══════════════════════════════════════ -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
+    <div class="modal-card">
+      <div class="modal-title">📖 Las Horas en Español</div>
+
+      <!-- EN PUNTO -->
+      <div class="review-section">
+        <h3><span class="review-badge badge-punto">EN PUNTO</span> 🕛</h3>
+        <div class="review-desc">
+          Cuando el minutero apunta al <strong>12</strong>, es "en punto".
+          El horario indica la hora exacta.
+        </div>
+        <div class="review-clock-row" id="reviewClocksPoint"></div>
+        <div class="review-examples">
+          <span class="review-chip">1:00 → la una en punto</span>
+          <span class="review-chip">3:00 → las tres en punto</span>
+          <span class="review-chip">12:00 → las doce en punto</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+
+      <!-- Y MEDIA -->
+      <div class="review-section">
+        <h3><span class="review-badge badge-media">Y MEDIA</span> 🕧</h3>
+        <div class="review-desc">
+          Cuando el minutero apunta al <strong>6</strong>, han pasado <strong>30 minutos</strong>.
+          Se dice "y media".
+        </div>
+        <div class="review-clock-row" id="reviewClocksHalf"></div>
+        <div class="review-examples">
+          <span class="review-chip">1:30 → la una y media</span>
+          <span class="review-chip">5:30 → las cinco y media</span>
+          <span class="review-chip">10:30 → las diez y media</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+
+      <!-- Y CUARTO -->
+      <div class="review-section">
+        <h3><span class="review-badge badge-cuarto">Y CUARTO</span> 🕒</h3>
+        <div class="review-desc">
+          Cuando el minutero apunta al <strong>3</strong>, han pasado <strong>15 minutos</strong>.
+          Se dice "y cuarto".
+        </div>
+        <div class="review-clock-row" id="reviewClocksQuarter"></div>
+        <div class="review-examples">
+          <span class="review-chip">2:15 → las dos y cuarto</span>
+          <span class="review-chip">6:15 → las seis y cuarto</span>
+          <span class="review-chip">11:15 → las once y cuarto</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+
+      <!-- MENOS CUARTO -->
+      <div class="review-section">
+        <h3><span class="review-badge badge-menos">MENOS CUARTO</span> 🕤</h3>
+        <div class="review-desc">
+          Cuando el minutero apunta al <strong>9</strong>, <strong>faltan 15 minutos</strong>
+          para la siguiente hora.
+        </div>
+        <div class="review-clock-row" id="reviewClocksMinus"></div>
+        <div class="review-examples">
+          <span class="review-chip">1:45 → las dos menos cuarto</span>
+          <span class="review-chip">4:45 → las cinco menos cuarto</span>
+          <span class="review-chip">11:45 → las doce menos cuarto</span>
+        </div>
+      </div>
+
+      <button class="modal-close" onclick="closeModal()">✅ ¡Entendido!</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
