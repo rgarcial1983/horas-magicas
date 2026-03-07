@@ -31,7 +31,7 @@ La PWA y el service worker funcionarán directamente en la versión de GitHub Pa
 
 Una vez abierta la página en el navegador, interactúa con los elementos para ver cómo funcionan los estilos y el JavaScript. El comportamiento específico depende del contenido implementado en `script.js`.
 
-> 📱 La aplicación funciona como Progressive Web App (PWA). Puedes instalarla en tu tablet, móvil o escritorio desde el navegador y usarla sin conexión una vez cargada.
+> 📱 La aplicación funciona como Progressive Web App (PWA). En la pantalla inicial verás un botón **"📥 Instalar App"** cuando el navegador detecte que es posible instalarla. Una vez instalada, podrás abrirla desde el lanzador de tu dispositivo y usarla sin conexión.
 
 
 

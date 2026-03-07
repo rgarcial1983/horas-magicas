@@ -490,4 +490,32 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.error('SW registration failed:', err));
   });
 }
+
+// PWA install prompt handling
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  // prevent automatic prompt
+  e.preventDefault();
+  deferredPrompt = e;
+  const btn = document.getElementById('btnInstall');
+  if (btn) btn.style.display = 'block';
+});
+
+document.addEventListener('appinstalled', () => {
+  console.log('PWA installed');
+  const btn = document.getElementById('btnInstall');
+  if (btn) btn.style.display = 'none';
+});
+
+const installBtn = document.getElementById('btnInstall');
+if (installBtn) {
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    installBtn.style.display = 'none';
+    console.log('User choice', choice.outcome);
+  });
+}
 selectQCount(10);

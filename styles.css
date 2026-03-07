@@ -180,6 +180,19 @@ body {
 }
 .btn-review:hover { transform: translateY(-3px); }
 
+/* Install PWA button */
+.btn-install {
+  width: 100%; padding: 14px;
+  background: linear-gradient(135deg, var(--sky), var(--ocean));
+  color: white; border: none; border-radius: 14px;
+  font-family: 'Baloo 2', cursive; font-size: 1.4rem; font-weight: 700;
+  cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 6px 20px rgba(116,185,255,0.4);
+  margin-top: 8px;
+}
+.btn-install:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(116,185,255,0.5); }
+.btn-install:active { transform: translateY(0); }
+
 /* ════════════════════════════════
    GAME SCREEN
    ════════════════════════════════ */
