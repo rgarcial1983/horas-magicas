@@ -1,6 +1,6 @@
 {
   "name": "Horas Mágicas",
-  "short_name": "Horas",
+  "short_name": "Horas Mágicas",
   "description": "Juego educativo para aprender a decir las horas en español",
   "start_url": ".",
   "display": "standalone",
