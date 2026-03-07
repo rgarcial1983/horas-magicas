@@ -19,9 +19,21 @@
 
 > No se necesita servidor ni dependencias adicionales, todo corre de forma estática.
 
+## Despliegue en GitHub Pages 🌐
+
+1. Publica el repositorio en GitHub bajo tu cuenta (por ejemplo, ya debería estar en https://github.com/rgarcial1983/horas-magicas).
+2. Ve a la configuración del repositorio → **Pages** y selecciona la rama `main` como fuente (carpeta `/` o `/docs` si usas otra).
+3. Después de un par de minutos, tu sitio estará disponible en `https://<usuario>.github.io/horas-magicas/`.
+
+La PWA y el service worker funcionarán directamente en la versión de GitHub Pages, permitiendo instalación y uso offline. Si usas un dominio personalizado, asegúrate de mantener las rutas relativas (el manifiesto usa `start_url: "."`).
+
 ## Uso ✨
 
 Una vez abierta la página en el navegador, interactúa con los elementos para ver cómo funcionan los estilos y el JavaScript. El comportamiento específico depende del contenido implementado en `script.js`.
+
+> 📱 La aplicación funciona como Progressive Web App (PWA). Puedes instalarla en tu tablet, móvil o escritorio desde el navegador y usarla sin conexión una vez cargada.
+
+
 
 ## Personalización y desarrollo 🛠️
 
