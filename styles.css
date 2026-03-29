@@ -13,6 +13,7 @@
   --text:   #2D3748;
   --shadow: 0 8px 32px rgba(0,0,0,0.12);
   --radius: 24px;
+   --bug:   #2f2fda;
 }
 
 /* ── RESET & BASE ── */
@@ -485,4 +486,35 @@ body {
 /* ── CONFETTI CANVAS ── */
 #confettiCanvas {
   position: fixed; inset: 0; pointer-events: none; z-index: 50;
+}
+
+/* ============================================================
+   BUG REPORT FOOTER
+   ============================================================ */
+.bug-footer {
+  position: fixed;
+  bottom: 0;
+  font-weight: bold;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  text-align: center;
+  padding: 8px 16px;
+  background: rgba(255,255,255,.75);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(38, 38, 214, 0.5);
+}
+.bug-link {
+  font-family: var(--font-body);
+  font-size: .75rem;
+  font-weight: bold;
+  color: var(--bug);
+  text-decoration: none;
+  opacity: .7;
+  transition: opacity .2s, color .2s;
+  letter-spacing: .01em;
+}
+.bug-link:hover {
+  opacity: 1;
+  color: #f06060;
 }
